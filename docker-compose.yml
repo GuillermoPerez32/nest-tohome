@@ -1,0 +1,14 @@
+version: '1'
+
+services:
+  db:
+    image: postgres:14.3
+    container_name: tohome-pgdb
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - ./db:/var/lib/postgresql/data
