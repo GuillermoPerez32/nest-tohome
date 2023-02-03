@@ -10,9 +10,17 @@ Backend for an ecommerce app
 
 ## Installation
 
+- Replace the name of .env.example file to .env and change the enviroment variables
+
+- Install dependencies using:
+
 ```bash
 $ yarn install
+```
 
+- Install database using: 
+
+```
 $ docker-compose up -d
 ```
 
