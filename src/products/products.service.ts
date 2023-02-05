@@ -3,8 +3,10 @@ import {
   InternalServerErrorException,
   BadRequestException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -29,14 +31,18 @@ export class ProductsService {
     }
   }
 
-  findAll() {
-    return this.productRepository.find();
+  findAll(paginationDto: PaginationDto) {
+    const { limit, offset } = paginationDto;
+    return this.productRepository.find({
+      take: limit,
+      skip: offset,
+    });
   }
 
   async findOne(id: number) {
     const product = await this.productRepository.findOneBy({ id });
     if (!product)
-      throw new BadRequestException(`Product with id ${id} doesn't exists`);
+      throw new NotFoundException(`Product with id ${id} doesn't exists`);
     return product;
   }
 
@@ -46,7 +52,6 @@ export class ProductsService {
       if (!product)
         throw new BadRequestException(`Product with id ${id} doesn't exists`);
       await this.productRepository.update(id, updateProductDto);
-
       return product;
     } catch (error) {
       this.handleExceptions(error);
