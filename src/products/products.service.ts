@@ -47,11 +47,14 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
+    const product = await this.productRepository.preload({
+      id,
+      ...updateProductDto,
+    });
+    if (!product)
+      throw new BadRequestException(`Product with id ${id} doesn't exists`);
     try {
-      const product = await this.productRepository.findOneBy({ id });
-      if (!product)
-        throw new BadRequestException(`Product with id ${id} doesn't exists`);
-      await this.productRepository.update(id, updateProductDto);
+      await this.productRepository.save(product);
       return product;
     } catch (error) {
       this.handleExceptions(error);
