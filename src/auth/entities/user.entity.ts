@@ -14,12 +14,12 @@ export class User {
   password: string;
 
   @Column('text')
-  full_name: string;
+  fullName: string;
 
   @Column('bool', {
     default: true,
   })
-  is_active: boolean;
+  isActive: boolean;
 
   @Column('text', {
     array: true,
