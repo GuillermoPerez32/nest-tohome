@@ -5,6 +5,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { VALID_ROLES } from '../interfaces';
 
 @Entity()
 export class User {
@@ -29,7 +30,7 @@ export class User {
 
   @Column('text', {
     array: true,
-    default: ['user'],
+    default: [VALID_ROLES.USER],
   })
   roles: string[];
 
