@@ -8,6 +8,7 @@ import {
   IsArray,
   IsIn,
 } from 'class-validator';
+import { Genders } from '../interfaces/genders.interface';
 
 export class CreateProductDto {
   @IsString()
@@ -37,7 +38,7 @@ export class CreateProductDto {
   sizes?: string[];
 
   @IsString()
-  @IsIn(['men', 'women', 'kid', 'unisex'])
+  @IsIn(Object.values(Genders))
   gender: string;
 
   @IsArray()
