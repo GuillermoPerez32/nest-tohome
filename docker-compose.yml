@@ -11,4 +11,4 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
     volumes:
-      - ./db:/data/postgres
+      - ./db:/var/lib/postgresql
