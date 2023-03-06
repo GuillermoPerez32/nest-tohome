@@ -1,8 +1,11 @@
+import { Exclude } from 'class-transformer';
+import { Product } from 'src/products/entities';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { VALID_ROLES } from '../interfaces';
@@ -17,7 +20,7 @@ export class User {
   })
   email: string;
 
-  @Column('text')
+  @Column('text', { select: false })
   password: string;
 
   @Column('text')
@@ -33,6 +36,9 @@ export class User {
     default: [VALID_ROLES.USER],
   })
   roles: string[];
+
+  @OneToMany(() => Product, (product) => product.user, { cascade: true })
+  products: Product[];
 
   @BeforeInsert()
   checkBeforeInsert() {

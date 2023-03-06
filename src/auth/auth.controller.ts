@@ -45,6 +45,12 @@ export class AuthController {
     };
   }
 
+  @Post('me')
+  @Auth()
+  revalidate(@GetUser() user: User) {
+    return this.authService.revalidate(user);
+  }
+
   @Post('privada3')
   @Auth(VALID_ROLES.USER)
   privada3(@GetUser() user: User, @GetHeader() header: string[]) {
